@@ -27,7 +27,7 @@
     "reason2Title": "Materiales seguros",
     "reason2Desc": "Elaborado con algodón y materiales orgánicos amigables con la piel. Costuras duraderas que resisten los lavados.",
     "reason3Title": "Envío gratuito",
-    "reason3Desc": "Envío gratuito en pedidos superiores a ¥5.000. Garantía de devolución y cambio de 14 días."
+    "reason3Desc": "Envío gratuito en pedidos superiores a $50. Garantía de devolución y cambio de 14 días."
   },
   "products": {
     "title": "Productos",
@@ -48,7 +48,7 @@
     "inStock": "En stock",
     "outOfStock": "Agotado",
     "inquire": "Consultar sobre este producto",
-    "freeShipping": "Envío gratuito en pedidos superiores a ¥5.000"
+    "freeShipping": "Envío gratuito en pedidos superiores a $50"
   },
   "contact": {
     "title": "Contacto",
@@ -73,8 +73,9 @@
     "description2": "Tu tienda online de moda para perros.",
     "menu": "Menú",
     "shopInfo": "Info de la tienda",
-    "shipping": "Envío: ¥550 a todo el país",
-    "freeShipping": "Gratis en pedidos +¥5.000",
+    "shipping": "Envío: $5",
+    "speedShipping": "Envío rápido: $15",
+    "freeShipping": "Envío gratis en pedidos +$50",
     "tel": "TEL: 03-1234-5678",
     "rights": "Todos los derechos reservados."
   },

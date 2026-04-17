@@ -27,7 +27,7 @@
     "reason2Title": "안심 소재",
     "reason2Desc": "피부에 순한 코튼·유기농 소재를 사용. 세탁해도 변형되지 않는 튼튼한 봉제입니다.",
     "reason3Title": "무료 배송",
-    "reason3Desc": "5,000엔 이상 구매 시 무료 배송. 14일간 반품·교환 보장으로 안심하고 이용하세요."
+    "reason3Desc": "₩50,000 이상 구매 시 무료 배송. 14일간 반품·교환 보장으로 안심하고 이용하세요."
   },
   "products": {
     "title": "상품 목록",
@@ -48,7 +48,7 @@
     "inStock": "재고 있음",
     "outOfStock": "품절",
     "inquire": "이 상품에 대해 문의하기",
-    "freeShipping": "5,000엔 이상 구매 시 무료 배송"
+    "freeShipping": "₩50,000 이상 무료 배송"
   },
   "contact": {
     "title": "문의하기",
@@ -73,8 +73,9 @@
     "description2": "반려견 패션 전문 온라인 쇼핑몰입니다.",
     "menu": "메뉴",
     "shopInfo": "쇼핑 정보",
-    "shipping": "배송비: 전국 일률 550엔",
-    "freeShipping": "5,000엔 이상 무료 배송",
+    "shipping": "배송비: 전국 일률 ₩5,000",
+    "speedShipping": "빠른 배송: ₩15,000",
+    "freeShipping": "₩50,000 이상 무료 배송",
     "tel": "TEL: 03-1234-5678",
     "rights": "All rights reserved."
   },

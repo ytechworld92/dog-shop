@@ -48,6 +48,7 @@ export function Footer({ lang, dict }: Props) {
             </h4>
             <ul className="mt-2 space-y-1 text-sm text-gray-600">
               <li>{dict.footer.shipping}</li>
+              <li>{dict.footer.speedShipping}</li>
               <li>{dict.footer.freeShipping}</li>
             </ul>
           </div>
