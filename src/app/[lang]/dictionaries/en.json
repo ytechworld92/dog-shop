@@ -1,0 +1,85 @@
+{
+  "site": {
+    "name": "Wanko Style",
+    "tagline": "Dog Fashion & Apparel"
+  },
+  "nav": {
+    "products": "Products",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title1": "Make your dog ",
+    "highlight": "more stylish",
+    "title2": "",
+    "description": "A wide range of dog clothes that combine function and design. Enjoy walks and events with your furry friend.",
+    "cta": "Shop Now",
+    "contact": "Contact Us"
+  },
+  "featured": {
+    "title": "Popular Items",
+    "subtitle": "Staff picks for your pup",
+    "viewAll": "View all products →"
+  },
+  "whyUs": {
+    "title": "Why Choose Wanko Style",
+    "reason1Title": "Designed for Dogs",
+    "reason1Desc": "Patterns designed to fit dog body shapes. We pursue both ease of movement and ease of dressing.",
+    "reason2Title": "Safe Materials",
+    "reason2Desc": "Made with skin-friendly cotton and organic materials. Durable stitching that holds up after washing.",
+    "reason3Title": "Free Shipping",
+    "reason3Desc": "Free shipping on orders over ¥5,000. 14-day return and exchange guarantee for your peace of mind."
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Click on an item to see details",
+    "allCategories": "All Categories",
+    "size": "Size",
+    "priceRange": "Price Range",
+    "upTo": "Up to ¥",
+    "yen": "",
+    "empty": "No products match your filters",
+    "emptyHint": "Try changing your filter settings",
+    "taxIncluded": " (tax incl.)",
+    "sizeLabel": "Size",
+    "backToList": "← Back to Products",
+    "color": "Color",
+    "targetBreeds": "Target Breeds",
+    "stock": "Stock",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "inquire": "Inquire About This Product",
+    "freeShipping": "Free shipping on orders over ¥5,000"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Feel free to reach out about sizing, returns, or any questions. We'll respond within 2 business days.",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "placeholder": "Tell us which product you're interested in or ask us anything",
+    "submit": "Send",
+    "submitting": "Sending...",
+    "success": "Thank you for your inquiry!",
+    "successDetail": "We'll respond within 2 business days.",
+    "newInquiry": "Send another inquiry",
+    "required": "*",
+    "otherMethods": "Other Ways to Reach Us",
+    "tel": "Phone: 03-1234-5678 (10:00–18:00 / Closed weekends & holidays)",
+    "emailAddress": "Email: info@wanko-style.example.com"
+  },
+  "footer": {
+    "description1": "Making your dog more stylish and comfortable.",
+    "description2": "Your online dog fashion store.",
+    "menu": "Menu",
+    "shopInfo": "Shop Info",
+    "shipping": "Shipping: ¥550 nationwide",
+    "freeShipping": "Free shipping over ¥5,000",
+    "tel": "TEL: 03-1234-5678",
+    "rights": "All rights reserved."
+  },
+  "card": {
+    "male": "♂ Boy",
+    "female": "♀ Girl"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "site": {
+    "name": "わんこスタイル",
+    "tagline": "犬服・ドッグウェア通販"
+  },
+  "nav": {
+    "products": "商品一覧",
+    "contact": "お問い合わせ"
+  },
+  "hero": {
+    "title1": "愛犬を",
+    "highlight": "もっとおしゃれ",
+    "title2": "に",
+    "description": "機能性とデザインを両立した犬服を豊富にラインナップ。お散歩もイベントも、愛犬と一緒に楽しもう。",
+    "cta": "商品を見る",
+    "contact": "お問い合わせ"
+  },
+  "featured": {
+    "title": "人気の商品",
+    "subtitle": "スタッフおすすめのアイテムです",
+    "viewAll": "すべての商品を見る →"
+  },
+  "whyUs": {
+    "title": "わんこスタイルが選ばれる理由",
+    "reason1Title": "犬専用の設計",
+    "reason1Desc": "犬の体型に合わせたパターン設計。動きやすさと着せやすさを徹底追求しています。",
+    "reason2Title": "安心の素材",
+    "reason2Desc": "肌に優しいコットン・オーガニック素材を使用。洗濯しても型崩れしにくい丈夫な縫製です。",
+    "reason3Title": "送料無料",
+    "reason3Desc": "5,000円以上のお買い物で送料無料。14日間の返品・交換保証で安心してお試しいただけます。"
+  },
+  "products": {
+    "title": "商品一覧",
+    "subtitle": "気になるアイテムをクリックして詳細をご覧ください",
+    "allCategories": "すべてのカテゴリ",
+    "size": "サイズ",
+    "priceRange": "価格帯",
+    "upTo": "〜",
+    "yen": "円",
+    "empty": "条件に合う商品が見つかりませんでした",
+    "emptyHint": "フィルターを変更してお探しください",
+    "taxIncluded": "（税込）",
+    "sizeLabel": "サイズ",
+    "backToList": "← 商品一覧に戻る",
+    "color": "カラー",
+    "targetBreeds": "対象犬種",
+    "stock": "在庫",
+    "inStock": "在庫あり",
+    "outOfStock": "品切れ中",
+    "inquire": "この商品について問い合わせる",
+    "freeShipping": "5,000円以上のお買い物で送料無料"
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "サイズの相談や返品・交換など、お気軽にお問い合わせください。2営業日以内にご返信いたします。",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "phone": "電話番号",
+    "message": "お問い合わせ内容",
+    "placeholder": "気になる商品のお名前や、ご質問をお書きください",
+    "submit": "送信する",
+    "submitting": "送信中...",
+    "success": "お問い合わせありがとうございます！",
+    "successDetail": "2営業日以内にご返信いたします。",
+    "newInquiry": "新しいお問い合わせを送る",
+    "required": "*",
+    "otherMethods": "その他のお問い合わせ方法",
+    "tel": "電話: 03-1234-5678（10:00〜18:00 / 土日祝休み）",
+    "emailAddress": "メール: info@wanko-style.example.com"
+  },
+  "footer": {
+    "description1": "愛犬をもっとおしゃれに、もっと快適に。",
+    "description2": "犬服の専門オンラインショップです。",
+    "menu": "メニュー",
+    "shopInfo": "ショップ情報",
+    "shipping": "送料: 全国一律 550円",
+    "freeShipping": "5,000円以上で送料無料",
+    "tel": "TEL: 03-1234-5678",
+    "rights": "All rights reserved."
+  },
+  "card": {
+    "male": "♂ 男の子",
+    "female": "♀ 女の子"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "site": {
+    "name": "Wanko Style",
+    "tagline": "Ropa y Moda para Perros"
+  },
+  "nav": {
+    "products": "Productos",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title1": "Haz que tu perro luzca ",
+    "highlight": "más elegante",
+    "title2": "",
+    "description": "Una amplia gama de ropa para perros que combina funcionalidad y diseño. Disfruta de paseos y eventos con tu mejor amigo.",
+    "cta": "Ver productos",
+    "contact": "Contacto"
+  },
+  "featured": {
+    "title": "Productos populares",
+    "subtitle": "Recomendados por nuestro equipo",
+    "viewAll": "Ver todos los productos →"
+  },
+  "whyUs": {
+    "title": "¿Por qué elegir Wanko Style?",
+    "reason1Title": "Diseñado para perros",
+    "reason1Desc": "Patrones diseñados para adaptarse a la forma del cuerpo de los perros. Priorizamos la comodidad y la facilidad para vestirlos.",
+    "reason2Title": "Materiales seguros",
+    "reason2Desc": "Elaborado con algodón y materiales orgánicos amigables con la piel. Costuras duraderas que resisten los lavados.",
+    "reason3Title": "Envío gratuito",
+    "reason3Desc": "Envío gratuito en pedidos superiores a ¥5.000. Garantía de devolución y cambio de 14 días."
+  },
+  "products": {
+    "title": "Productos",
+    "subtitle": "Haz clic en un artículo para ver los detalles",
+    "allCategories": "Todas las categorías",
+    "size": "Talla",
+    "priceRange": "Rango de precio",
+    "upTo": "Hasta ¥",
+    "yen": "",
+    "empty": "No se encontraron productos con esos filtros",
+    "emptyHint": "Intenta cambiar la configuración del filtro",
+    "taxIncluded": " (imp. incl.)",
+    "sizeLabel": "Talla",
+    "backToList": "← Volver a productos",
+    "color": "Color",
+    "targetBreeds": "Razas objetivo",
+    "stock": "Stock",
+    "inStock": "En stock",
+    "outOfStock": "Agotado",
+    "inquire": "Consultar sobre este producto",
+    "freeShipping": "Envío gratuito en pedidos superiores a ¥5.000"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "No dudes en contactarnos sobre tallas, devoluciones o cualquier pregunta. Responderemos en 2 días hábiles.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "placeholder": "Cuéntanos qué producto te interesa o haznos cualquier pregunta",
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "success": "¡Gracias por tu consulta!",
+    "successDetail": "Responderemos en 2 días hábiles.",
+    "newInquiry": "Enviar otra consulta",
+    "required": "*",
+    "otherMethods": "Otras formas de contacto",
+    "tel": "Teléfono: 03-1234-5678 (10:00–18:00 / Cerrado fines de semana y festivos)",
+    "emailAddress": "Email: info@wanko-style.example.com"
+  },
+  "footer": {
+    "description1": "Haz que tu perro sea más elegante y cómodo.",
+    "description2": "Tu tienda online de moda para perros.",
+    "menu": "Menú",
+    "shopInfo": "Info de la tienda",
+    "shipping": "Envío: ¥550 a todo el país",
+    "freeShipping": "Gratis en pedidos +¥5.000",
+    "tel": "TEL: 03-1234-5678",
+    "rights": "Todos los derechos reservados."
+  },
+  "card": {
+    "male": "♂ Macho",
+    "female": "♀ Hembra"
+  }
+}
