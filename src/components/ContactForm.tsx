@@ -82,20 +82,7 @@ export function ContactForm({ texts }: Props) {
         />
       </div>
 
-      <div>
-        <label
-          htmlFor="phone"
-          className="block text-sm font-medium text-gray-700"
-        >
-          {texts.phone}
-        </label>
-        <input
-          id="phone"
-          name="phone"
-          type="tel"
-          className="mt-1 w-full rounded-lg border border-amber-200 px-4 py-2.5 text-sm focus:border-amber-400 focus:outline-none"
-        />
-      </div>
+
 
       <div>
         <label

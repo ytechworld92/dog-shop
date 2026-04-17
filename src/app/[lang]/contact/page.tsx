@@ -29,15 +29,6 @@ export default async function ContactPage({
           <ContactForm texts={dict.contact} />
         </div>
 
-        <div className="mt-12 rounded-2xl bg-amber-50 p-6">
-          <h2 className="font-semibold text-gray-800">
-            {dict.contact.otherMethods}
-          </h2>
-          <ul className="mt-3 space-y-2 text-sm text-gray-600">
-            <li>📞 {dict.contact.tel}</li>
-            <li>📧 {dict.contact.emailAddress}</li>
-          </ul>
-        </div>
       </section>
     </main>
   );
