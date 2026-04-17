@@ -9,8 +9,8 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "わんこスタイル | 犬服・ドッグウェア通販",
-    template: "%s | わんこスタイル",
+    default: "わん・ダフル | 犬服・ドッグウェア通販",
+    template: "%s | わん・ダフル",
   },
   description:
     "愛犬をもっとおしゃれに。Tシャツ、パーカー、レインコート、コスプレなど犬服を豊富に取り揃え。5,000円以上で送料無料。",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    siteName: "わんこスタイル",
+    siteName: "わん・ダフル",
   },
 };
 

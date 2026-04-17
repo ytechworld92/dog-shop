@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "Wanko Style",
+    "name": "Wanderful",
     "tagline": "Dog Fashion & Apparel"
   },
   "nav": {
@@ -21,7 +21,7 @@
     "viewAll": "View all products →"
   },
   "whyUs": {
-    "title": "Why Choose Wanko Style",
+    "title": "Why Choose Wanderful",
     "reason1Title": "Designed for Dogs",
     "reason1Desc": "Patterns designed to fit dog body shapes. We pursue both ease of movement and ease of dressing.",
     "reason2Title": "Safe Materials",
@@ -66,7 +66,7 @@
     "required": "*",
     "otherMethods": "Other Ways to Reach Us",
     "tel": "Phone: 03-1234-5678 (10:00–18:00 / Closed weekends & holidays)",
-    "emailAddress": "Email: info@wanko-style.example.com"
+    "emailAddress": "Email: info@wanderful-dog.example.com"
   },
   "footer": {
     "description1": "Making your dog more stylish and comfortable.",

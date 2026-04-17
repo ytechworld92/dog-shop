@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://wanko-style.example.com/sitemap.xml",
+    sitemap: "https://wanderful-dog.example.com/sitemap.xml",
   };
 }
