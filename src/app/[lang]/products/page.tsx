@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { filterProducts } from "@/data/dogs";
+import { getProducts } from "@/lib/products";
 import { ProductCard } from "@/components/DogCard";
 import { ProductFilter } from "@/components/DogFilter";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
@@ -9,6 +9,8 @@ import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 export const metadata: Metadata = {
   title: "商品一覧 | Products",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function ProductsPage({
   params,
@@ -28,7 +30,7 @@ export default async function ProductsPage({
   const maxPrice =
     typeof sp.maxPrice === "string" ? Number(sp.maxPrice) : undefined;
 
-  const filteredProducts = filterProducts({ category, size, maxPrice });
+  const filteredProducts = await getProducts({ category, size, maxPrice });
 
   return (
     <main className="flex-1">
@@ -36,9 +38,7 @@ export default async function ProductsPage({
         <h1 className="text-3xl font-bold text-gray-900">
           {dict.products.title}
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
-          {dict.products.subtitle}
-        </p>
+        <p className="mt-1 text-sm text-gray-500">{dict.products.subtitle}</p>
 
         <div className="mt-6">
           <Suspense fallback={null}>

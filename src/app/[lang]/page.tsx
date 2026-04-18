@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products } from "@/data/dogs";
+import { getFeaturedProducts } from "@/lib/products";
 import { ProductCard } from "@/components/DogCard";
 import { getDictionary, hasLocale, type Locale } from "./dictionaries";
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage({
   params,
@@ -13,11 +15,10 @@ export default async function HomePage({
   if (!hasLocale(lang)) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const featuredProducts = products.filter((p) => p.featured);
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <main className="flex-1">
-      {/* Hero */}
       <section className="bg-gradient-to-b from-amber-50 to-white px-4 py-20 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           {dict.hero.title1}
@@ -43,7 +44,6 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Featured */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-2xl font-bold text-gray-900">
           {dict.featured.title}
@@ -69,7 +69,6 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Why us */}
       <section className="bg-amber-50 px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-2xl font-bold text-gray-900">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Product } from "@/types/dog";
+import type { Product } from "@/lib/products";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
 const categoryEmoji: Record<string, string> = {

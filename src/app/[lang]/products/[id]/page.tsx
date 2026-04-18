@@ -1,19 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products, getProductById } from "@/data/dogs";
-import {
-  getDictionary,
-  hasLocale,
-  locales,
-  type Locale,
-} from "../../dictionaries";
+import { getProductById } from "@/lib/products";
+import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
 
-export function generateStaticParams() {
-  return locales.flatMap((lang) =>
-    products.map((product) => ({ lang, id: product.id })),
-  );
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -21,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
   if (!product) return {};
 
   return {
@@ -38,10 +29,19 @@ export default async function ProductDetailPage({
   const { lang, id } = await params;
   if (!hasLocale(lang)) notFound();
 
-  const product = getProductById(id);
+  const product = await getProductById(id);
   if (!product) notFound();
 
   const dict = await getDictionary(lang as Locale);
+
+  const categoryEmoji: Record<string, string> = {
+    "Tシャツ": "👕",
+    "パーカー": "🧥",
+    "レインコート": "🌧️",
+    "ワンピース": "👗",
+    "コスプレ": "🎭",
+    "防寒着": "🧣",
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -53,7 +53,7 @@ export default async function ProductDetailPage({
       "@type": "Offer",
       price: product.price,
       priceCurrency: "JPY",
-      availability: product.inStock
+      availability: product.in_stock
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
     },
@@ -76,17 +76,7 @@ export default async function ProductDetailPage({
 
         <div className="mt-6 grid gap-8 md:grid-cols-2">
           <div className="aspect-square rounded-2xl bg-amber-50 flex items-center justify-center text-8xl">
-            {product.category === "Tシャツ"
-              ? "👕"
-              : product.category === "パーカー"
-                ? "🧥"
-                : product.category === "レインコート"
-                  ? "🌧️"
-                  : product.category === "ワンピース"
-                    ? "👗"
-                    : product.category === "コスプレ"
-                      ? "🎭"
-                      : "🧣"}
+            {categoryEmoji[product.category] ?? "👕"}
           </div>
 
           <div>
@@ -115,12 +105,12 @@ export default async function ProductDetailPage({
               />
               <InfoRow
                 label={dict.products.targetBreeds}
-                value={product.targetBreeds.join("、")}
+                value={product.target_breeds.join("、")}
               />
               <InfoRow
                 label={dict.products.stock}
                 value={
-                  product.inStock
+                  product.in_stock
                     ? dict.products.inStock
                     : dict.products.outOfStock
                 }
