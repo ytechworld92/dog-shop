@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductById } from "@/lib/products";
 import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
+import { formatPrice } from "@/lib/currency";
 
 export const dynamic = "force-dynamic";
 
@@ -115,8 +116,8 @@ export default async function ProductDetailPage({
               {product.name}
             </h1>
 
-            <p className="mt-4 text-3xl font-bold text-amber-700">
-              &yen;{product.price.toLocaleString()}
+            <p className="mt-4 text-3xl font-bold text-amber-700 notranslate">
+              {formatPrice(product.price, lang)}
               <span className="text-sm font-normal text-gray-400">
                 {dict.products.taxIncluded}
               </span>

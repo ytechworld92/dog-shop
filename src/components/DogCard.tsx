@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@/lib/products";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
+import { formatPrice } from "@/lib/currency";
 
 const categoryEmoji: Record<string, string> = {
   "Tシャツ": "👕",
@@ -52,8 +53,8 @@ export function ProductCard({ product, lang, dict }: Props) {
         <p className="mt-1 text-sm text-gray-500">
           {dict.products.sizeLabel}: {product.sizes.join(" / ")}
         </p>
-        <p className="mt-2 text-lg font-bold text-amber-700">
-          &yen;{product.price.toLocaleString()}
+        <p className="mt-2 text-lg font-bold text-amber-700 notranslate">
+          {formatPrice(product.price, lang)}
           <span className="text-xs font-normal text-gray-400">
             {dict.products.taxIncluded}
           </span>
