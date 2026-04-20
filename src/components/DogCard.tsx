@@ -41,11 +41,11 @@ export function ProductCard({ product, lang, dict }: Props) {
         )}
       </div>
       <div className="p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-gray-800 group-hover:text-amber-700">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-base font-bold leading-snug text-gray-800 group-hover:text-amber-700">
             {product.name}
           </h3>
-          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800">
+          <span className="mt-0.5 shrink-0 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
             {product.category}
           </span>
         </div>
