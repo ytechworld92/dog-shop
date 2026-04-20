@@ -31,7 +31,7 @@ export function ProductFilter({ texts }: Props) {
   return (
     <div className="flex flex-wrap gap-3">
       <select
-        className="rounded-lg border border-amber-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-amber-400 focus:outline-none"
+        className="rounded-full border border-beige bg-white px-4 py-2 text-sm text-text-muted focus:border-accent focus:outline-none"
         value={searchParams.get("category") ?? ""}
         onChange={(e) => updateFilter("category", e.target.value)}
       >
@@ -44,7 +44,7 @@ export function ProductFilter({ texts }: Props) {
       </select>
 
       <select
-        className="rounded-lg border border-amber-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-amber-400 focus:outline-none"
+        className="rounded-full border border-beige bg-white px-4 py-2 text-sm text-text-muted focus:border-accent focus:outline-none"
         value={searchParams.get("size") ?? ""}
         onChange={(e) => updateFilter("size", e.target.value)}
       >
@@ -57,7 +57,7 @@ export function ProductFilter({ texts }: Props) {
       </select>
 
       <select
-        className="rounded-lg border border-amber-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-amber-400 focus:outline-none"
+        className="rounded-full border border-beige bg-white px-4 py-2 text-sm text-text-muted focus:border-accent focus:outline-none"
         value={searchParams.get("maxPrice") ?? ""}
         onChange={(e) => updateFilter("maxPrice", e.target.value)}
       >

@@ -26,7 +26,7 @@ export function LanguageSwitcher({ lang }: { lang: Locale }) {
       value={lang}
       onChange={handleChange}
       aria-label="Language"
-      className="rounded-lg border border-amber-200 bg-white px-2 py-1.5 text-sm text-gray-700 focus:border-amber-400 focus:outline-none"
+      className="rounded-full border border-beige bg-white px-3 py-1.5 text-xs text-text-muted focus:border-accent focus:outline-none"
     >
       {(Object.keys(localeLabels) as Locale[]).map((locale) => (
         <option key={locale} value={locale}>

@@ -19,37 +19,55 @@ export default async function HomePage({
 
   return (
     <main className="flex-1">
-      <section className="bg-gradient-to-b from-amber-50 to-white px-4 py-20 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          {dict.hero.title1}
-          <span className="text-amber-600">{dict.hero.highlight}</span>
-          {dict.hero.title2}
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-gray-600">
-          {dict.hero.description}
-        </p>
-        <div className="mt-8 flex justify-center gap-4">
-          <Link
-            href={`/${lang}/products`}
-            className="rounded-lg bg-amber-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-700"
-          >
-            {dict.hero.cta}
-          </Link>
-          <Link
-            href={`/${lang}/contact`}
-            className="rounded-lg border border-amber-300 bg-white px-6 py-3 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-50"
-          >
-            {dict.hero.contact}
-          </Link>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-pink-light via-beige to-accent-light px-4 py-24 text-center sm:py-32">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute -left-20 top-10 h-64 w-64 rounded-full bg-pink blur-3xl" />
+          <div className="absolute -right-20 bottom-10 h-64 w-64 rounded-full bg-accent-light blur-3xl" />
+        </div>
+        <div className="relative">
+          <p className="text-sm font-medium uppercase tracking-[0.3em] text-accent">
+            Dog Fashion
+          </p>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            {dict.hero.title1}
+            <span className="text-accent">{dict.hero.highlight}</span>
+            {dict.hero.title2}
+          </h1>
+          <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-text-muted">
+            {dict.hero.description}
+          </p>
+          <div className="mt-10 flex justify-center gap-4">
+            <Link
+              href={`/${lang}/products`}
+              className="rounded-full bg-gradient-to-r from-accent to-accent-gold px-8 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              {dict.hero.cta}
+            </Link>
+            <Link
+              href={`/${lang}/contact`}
+              className="rounded-full border border-accent/30 bg-white/60 px-8 py-3.5 text-sm font-semibold text-accent backdrop-blur-sm transition-all hover:bg-white"
+            >
+              {dict.hero.contact}
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {dict.featured.title}
-        </h2>
-        <p className="mt-1 text-sm text-gray-500">{dict.featured.subtitle}</p>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Featured */}
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <div className="text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">
+            Pick Up
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">
+            {dict.featured.title}
+          </h2>
+          <p className="mt-2 text-sm text-text-muted">
+            {dict.featured.subtitle}
+          </p>
+        </div>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featuredProducts.map((product) => (
             <ProductCard
               key={product.id}
@@ -59,46 +77,58 @@ export default async function HomePage({
             />
           ))}
         </div>
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <Link
             href={`/${lang}/products`}
-            className="text-sm font-medium text-amber-700 hover:text-amber-800"
+            className="inline-block rounded-full border border-accent/30 px-8 py-3 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-white"
           >
             {dict.featured.viewAll}
           </Link>
         </div>
       </section>
 
-      <section className="bg-amber-50 px-4 py-16">
+      {/* Why us */}
+      <section className="bg-gradient-to-b from-beige/50 to-background px-4 py-20">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-2xl font-bold text-gray-900">
-            {dict.whyUs.title}
-          </h2>
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            <div className="text-center">
-              <div className="text-4xl">✂️</div>
-              <h3 className="mt-3 font-semibold text-gray-800">
+          <div className="text-center">
+            <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">
+              Our Promise
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">
+              {dict.whyUs.title}
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-8 sm:grid-cols-3">
+            <div className="rounded-3xl bg-card p-8 text-center shadow-sm">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-light text-2xl">
+                ✂️
+              </div>
+              <h3 className="mt-5 font-semibold text-foreground">
                 {dict.whyUs.reason1Title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-3 text-sm leading-relaxed text-text-muted">
                 {dict.whyUs.reason1Desc}
               </p>
             </div>
-            <div className="text-center">
-              <div className="text-4xl">🧵</div>
-              <h3 className="mt-3 font-semibold text-gray-800">
+            <div className="rounded-3xl bg-card p-8 text-center shadow-sm">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-light text-2xl">
+                🧵
+              </div>
+              <h3 className="mt-5 font-semibold text-foreground">
                 {dict.whyUs.reason2Title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-3 text-sm leading-relaxed text-text-muted">
                 {dict.whyUs.reason2Desc}
               </p>
             </div>
-            <div className="text-center">
-              <div className="text-4xl">🚚</div>
-              <h3 className="mt-3 font-semibold text-gray-800">
+            <div className="rounded-3xl bg-card p-8 text-center shadow-sm">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-beige text-2xl">
+                🚚
+              </div>
+              <h3 className="mt-5 font-semibold text-foreground">
                 {dict.whyUs.reason3Title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-3 text-sm leading-relaxed text-text-muted">
                 {dict.whyUs.reason3Desc}
               </p>
             </div>

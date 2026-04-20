@@ -9,7 +9,7 @@ export function CartIcon({ lang }: { lang: string }) {
   return (
     <Link
       href={`/${lang}/cart`}
-      className="relative text-gray-600 transition-colors hover:text-amber-700"
+      className="relative text-text-muted transition-colors hover:text-accent"
       aria-label="Cart"
     >
       <svg
@@ -27,7 +27,7 @@ export function CartIcon({ lang }: { lang: string }) {
         />
       </svg>
       {cartCount > 0 && (
-        <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-amber-600 text-[10px] font-bold text-white">
+        <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
           {cartCount}
         </span>
       )}
