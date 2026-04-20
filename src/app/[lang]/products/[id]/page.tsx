@@ -5,6 +5,7 @@ import { getProductById } from "@/lib/products";
 import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
 import { formatPrice } from "@/lib/currency";
 import { localizeCategory } from "@/lib/categories";
+import { ProductActions } from "@/components/ProductActions";
 
 export const dynamic = "force-dynamic";
 
@@ -151,12 +152,16 @@ export default async function ProductDetailPage({
               {product.description}
             </p>
 
-            <Link
-              href={`/${lang}/contact?product=${product.name}`}
-              className="mt-8 block rounded-lg bg-amber-600 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-amber-700"
-            >
-              {dict.products.inquire}
-            </Link>
+            <ProductActions
+              product={{
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image_url: product.image_url,
+                image_urls: product.image_urls,
+                category: product.category,
+              }}
+            />
 
             <p className="mt-3 text-center text-xs text-gray-400">
               {dict.products.freeShipping}

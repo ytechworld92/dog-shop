@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { CartIcon } from "./CartIcon";
 
 type Props = {
   lang: Locale;
@@ -36,6 +37,7 @@ export function Header({ lang, dict }: Props) {
               </Link>
             </li>
           </ul>
+          <CartIcon lang={lang} />
           <LanguageSwitcher lang={lang} />
         </div>
       </nav>
