@@ -13,6 +13,7 @@ type Product = {
   target_breeds: string[];
   featured: boolean;
   in_stock: boolean;
+  image_url: string | null;
 };
 
 const CATEGORIES = [
@@ -34,6 +35,7 @@ const emptyProduct = {
   target_breeds: [] as string[],
   featured: false,
   in_stock: true,
+  image_url: null as string | null,
 };
 
 export default function AdminPage() {
@@ -83,6 +85,7 @@ export default function AdminPage() {
       target_breeds: product.target_breeds,
       featured: product.featured,
       in_stock: product.in_stock,
+      image_url: product.image_url,
     });
   }
 
@@ -196,6 +199,18 @@ export default function AdminPage() {
               key={product.id}
               className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
             >
+              <div className="flex items-center gap-4">
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="h-14 w-14 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-amber-50 text-2xl">
+                    👕
+                  </div>
+                )}
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-gray-900">
@@ -219,6 +234,7 @@ export default function AdminPage() {
                   ¥{product.price.toLocaleString()} / サイズ:{" "}
                   {product.sizes.join(", ")}
                 </p>
+              </div>
               </div>
               <div className="flex gap-2">
                 <button
@@ -255,6 +271,28 @@ function ProductForm({
   saving: boolean;
   onCancel: () => void;
 }) {
+  const [uploading, setUploading] = useState(false);
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (res.ok) {
+      const { url } = await res.json();
+      setForm({ ...form, image_url: url });
+    }
+    setUploading(false);
+  }
+
   return (
     <form onSubmit={onSubmit} className="mt-4 space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
@@ -351,6 +389,37 @@ function ProductForm({
             placeholder="トイプードル,チワワ"
             className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"
           />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          商品画像
+        </label>
+        <div className="mt-1 flex items-center gap-4">
+          {form.image_url ? (
+            <img
+              src={form.image_url}
+              alt="preview"
+              className="h-20 w-20 rounded-lg object-cover"
+            />
+          ) : (
+            <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-amber-50 text-3xl">
+              👕
+            </div>
+          )}
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={uploading}
+              className="text-sm text-gray-600"
+            />
+            {uploading && (
+              <p className="mt-1 text-xs text-amber-600">アップロード中...</p>
+            )}
+          </div>
         </div>
       </div>
 

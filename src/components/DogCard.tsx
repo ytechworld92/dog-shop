@@ -23,8 +23,16 @@ export function ProductCard({ product, lang, dict }: Props) {
       href={`/${lang}/products/${product.id}`}
       className="group overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm transition-shadow hover:shadow-md"
     >
-      <div className="aspect-square bg-amber-50 flex items-center justify-center text-6xl">
-        {categoryEmoji[product.category] ?? "👕"}
+      <div className="aspect-square bg-amber-50 flex items-center justify-center overflow-hidden">
+        {product.image_url ? (
+          <img
+            src={product.image_url}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          />
+        ) : (
+          <span className="text-6xl">{categoryEmoji[product.category] ?? "👕"}</span>
+        )}
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between">
