@@ -22,7 +22,7 @@ export async function PUT(
     .update(body)
     .eq("id", id)
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
