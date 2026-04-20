@@ -13,7 +13,7 @@ type Product = {
   target_breeds: string[];
   featured: boolean;
   in_stock: boolean;
-  image_url: string | null;
+  image_urls: string[];
 };
 
 const CATEGORIES = [
@@ -25,18 +25,20 @@ const CATEGORIES = [
   "防寒着",
 ];
 
-const emptyProduct = {
+const emptyForm = {
   name: "",
   category: "Tシャツ",
-  price: 0,
+  priceText: "",
   description: "",
   sizes: [] as string[],
   colors: [] as string[],
   target_breeds: [] as string[],
   featured: false,
   in_stock: true,
-  image_url: null as string | null,
+  image_urls: [] as string[],
 };
+
+type FormState = typeof emptyForm;
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
@@ -44,7 +46,8 @@ export default function AdminPage() {
   const [error, setError] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [editing, setEditing] = useState<Product | null>(null);
-  const [form, setForm] = useState(emptyProduct);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState<FormState>(emptyForm);
   const [saving, setSaving] = useState(false);
 
   const fetchProducts = useCallback(async () => {
@@ -78,25 +81,46 @@ export default function AdminPage() {
     setForm({
       name: product.name,
       category: product.category,
-      price: product.price,
+      priceText: String(product.price),
       description: product.description,
       sizes: product.sizes,
       colors: product.colors,
       target_breeds: product.target_breeds,
       featured: product.featured,
       in_stock: product.in_stock,
-      image_url: product.image_url,
+      image_urls: product.image_urls ?? [],
     });
+    setShowForm(true);
   }
 
   function startNew() {
     setEditing(null);
-    setForm(emptyProduct);
+    setForm(emptyForm);
+    setShowForm(true);
+  }
+
+  function cancelForm() {
+    setForm(emptyForm);
+    setEditing(null);
+    setShowForm(false);
   }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+
+    const payload = {
+      name: form.name,
+      category: form.category,
+      price: Number(form.priceText) || 0,
+      description: form.description,
+      sizes: form.sizes,
+      colors: form.colors,
+      target_breeds: form.target_breeds,
+      featured: form.featured,
+      in_stock: form.in_stock,
+      image_urls: form.image_urls,
+    };
 
     const url = editing
       ? `/api/admin/products/${editing.id}`
@@ -106,18 +130,16 @@ export default function AdminPage() {
     await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(payload),
     });
 
     setSaving(false);
-    setForm(emptyProduct);
-    setEditing(null);
+    cancelForm();
     fetchProducts();
   }
 
   async function handleDelete(id: string) {
     if (!confirm("本当に削除しますか？")) return;
-
     await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
     fetchProducts();
   }
@@ -133,9 +155,7 @@ export default function AdminPage() {
           <p className="mt-1 text-sm text-gray-500">
             パスワードを入力してください
           </p>
-          {error && (
-            <p className="mt-3 text-sm text-red-600">{error}</p>
-          )}
+          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
           <input
             type="password"
             value={password}
@@ -159,9 +179,7 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-50">
       <header className="border-b bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-900">
-            🐾 商品管理
-          </h1>
+          <h1 className="text-xl font-bold text-gray-900">🐾 商品管理</h1>
           <button
             onClick={startNew}
             className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
@@ -172,27 +190,21 @@ export default function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-8">
-        {/* Form */}
-        {(editing !== undefined || form.name !== "" || editing === null) &&
-          form !== emptyProduct && (
-            <div className="mb-8 rounded-2xl bg-white p-6 shadow-sm">
-              <h2 className="text-lg font-bold text-gray-900">
-                {editing ? "商品を編集" : "新規商品"}
-              </h2>
-              <ProductForm
-                form={form}
-                setForm={setForm}
-                onSubmit={handleSave}
-                saving={saving}
-                onCancel={() => {
-                  setForm(emptyProduct);
-                  setEditing(null);
-                }}
-              />
-            </div>
-          )}
+        {showForm && (
+          <div className="mb-8 rounded-2xl bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900">
+              {editing ? "商品を編集" : "新規商品"}
+            </h2>
+            <ProductForm
+              form={form}
+              setForm={setForm}
+              onSubmit={handleSave}
+              saving={saving}
+              onCancel={cancelForm}
+            />
+          </div>
+        )}
 
-        {/* Product list */}
         <div className="space-y-3">
           {products.map((product) => (
             <div
@@ -200,9 +212,9 @@ export default function AdminPage() {
               className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
             >
               <div className="flex items-center gap-4">
-                {product.image_url ? (
+                {product.image_urls?.length > 0 ? (
                   <img
-                    src={product.image_url}
+                    src={product.image_urls[0]}
                     alt={product.name}
                     className="h-14 w-14 rounded-lg object-cover"
                   />
@@ -211,30 +223,30 @@ export default function AdminPage() {
                     👕
                   </div>
                 )}
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-gray-900">
-                    {product.name}
-                  </span>
-                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
-                    {product.category}
-                  </span>
-                  {product.featured && (
-                    <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800">
-                      おすすめ
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-gray-900">
+                      {product.name}
                     </span>
-                  )}
-                  {!product.in_stock && (
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-800">
-                      品切れ
+                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+                      {product.category}
                     </span>
-                  )}
+                    {product.featured && (
+                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800">
+                        おすすめ
+                      </span>
+                    )}
+                    {!product.in_stock && (
+                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-800">
+                        品切れ
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-sm text-gray-500">
+                    ¥{product.price.toLocaleString()} / サイズ:{" "}
+                    {product.sizes.join(", ")} / 画像: {product.image_urls?.length ?? 0}枚
+                  </p>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
-                  ¥{product.price.toLocaleString()} / サイズ:{" "}
-                  {product.sizes.join(", ")}
-                </p>
-              </div>
               </div>
               <div className="flex gap-2">
                 <button
@@ -265,8 +277,8 @@ function ProductForm({
   saving,
   onCancel,
 }: {
-  form: typeof emptyProduct;
-  setForm: (f: typeof emptyProduct) => void;
+  form: FormState;
+  setForm: (f: FormState) => void;
   onSubmit: (e: React.FormEvent) => void;
   saving: boolean;
   onCancel: () => void;
@@ -274,23 +286,37 @@ function ProductForm({
   const [uploading, setUploading] = useState(false);
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
+    const newUrls: string[] = [];
 
-    const res = await fetch("/api/admin/upload", {
-      method: "POST",
-      body: formData,
-    });
+    for (const file of Array.from(files)) {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    if (res.ok) {
-      const { url } = await res.json();
-      setForm({ ...form, image_url: url });
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const { url } = await res.json();
+        newUrls.push(url);
+      }
     }
+
+    setForm({ ...form, image_urls: [...form.image_urls, ...newUrls] });
     setUploading(false);
+    e.target.value = "";
+  }
+
+  function removeImage(index: number) {
+    setForm({
+      ...form,
+      image_urls: form.image_urls.filter((_, i) => i !== index),
+    });
   }
 
   return (
@@ -329,13 +355,14 @@ function ProductForm({
             価格（円）
           </label>
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             required
-            min={0}
-            value={form.price}
+            value={form.priceText}
             onChange={(e) =>
-              setForm({ ...form, price: Number(e.target.value) })
+              setForm({ ...form, priceText: e.target.value.replace(/[^0-9]/g, "") })
             }
+            placeholder="2480"
             className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"
           />
         </div>
@@ -349,7 +376,10 @@ function ProductForm({
             onChange={(e) =>
               setForm({
                 ...form,
-                sizes: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                sizes: e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
               })
             }
             placeholder="XS,S,M,L"
@@ -366,7 +396,10 @@ function ProductForm({
             onChange={(e) =>
               setForm({
                 ...form,
-                colors: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                colors: e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
               })
             }
             placeholder="レッド,ブルー"
@@ -383,7 +416,10 @@ function ProductForm({
             onChange={(e) =>
               setForm({
                 ...form,
-                target_breeds: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                target_breeds: e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
               })
             }
             placeholder="トイプードル,チワワ"
@@ -392,35 +428,43 @@ function ProductForm({
         </div>
       </div>
 
+      {/* Multiple images */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          商品画像
+          商品画像（複数可）
         </label>
-        <div className="mt-1 flex items-center gap-4">
-          {form.image_url ? (
-            <img
-              src={form.image_url}
-              alt="preview"
-              className="h-20 w-20 rounded-lg object-cover"
-            />
-          ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-amber-50 text-3xl">
-              👕
+        <div className="mt-2 flex flex-wrap gap-3">
+          {form.image_urls.map((url, i) => (
+            <div key={i} className="relative">
+              <img
+                src={url}
+                alt={`画像 ${i + 1}`}
+                className="h-20 w-20 rounded-lg object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => removeImage(i)}
+                className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white hover:bg-red-600"
+              >
+                x
+              </button>
             </div>
-          )}
-          <div>
+          ))}
+          <label className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 text-gray-400 hover:border-amber-400 hover:text-amber-600">
             <input
               type="file"
               accept="image/*"
+              multiple
               onChange={handleImageUpload}
               disabled={uploading}
-              className="text-sm text-gray-600"
+              className="hidden"
             />
-            {uploading && (
-              <p className="mt-1 text-xs text-amber-600">アップロード中...</p>
-            )}
-          </div>
+            {uploading ? "..." : "+"}
+          </label>
         </div>
+        {uploading && (
+          <p className="mt-1 text-xs text-amber-600">アップロード中...</p>
+        )}
       </div>
 
       <div>

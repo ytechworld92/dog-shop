@@ -12,6 +12,7 @@ export type Product = {
   featured: boolean;
   in_stock: boolean;
   image_url: string | null;
+  image_urls: string[];
 };
 
 export async function getProducts(params?: {

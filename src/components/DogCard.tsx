@@ -24,7 +24,13 @@ export function ProductCard({ product, lang, dict }: Props) {
       className="group overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm transition-shadow hover:shadow-md"
     >
       <div className="aspect-square bg-amber-50 flex items-center justify-center overflow-hidden">
-        {product.image_url ? (
+        {product.image_urls?.length > 0 ? (
+          <img
+            src={product.image_urls[0]}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          />
+        ) : product.image_url ? (
           <img
             src={product.image_url}
             alt={product.name}
