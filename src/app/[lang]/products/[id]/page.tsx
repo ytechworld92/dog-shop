@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getProductById } from "@/lib/products";
 import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
 import { formatPrice } from "@/lib/currency";
+import { localizeCategory } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
 
@@ -109,8 +110,8 @@ export default async function ProductDetailPage({
           </div>
 
           <div>
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
-              {product.category}
+            <span className="notranslate rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
+              {localizeCategory(product.category, lang)}
             </span>
             <h1 className="mt-3 text-3xl font-bold text-gray-900">
               {product.name}

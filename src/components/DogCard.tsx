@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Product } from "@/lib/products";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 import { formatPrice } from "@/lib/currency";
+import { localizeCategory } from "@/lib/categories";
 
 const categoryEmoji: Record<string, string> = {
   "Tシャツ": "👕",
@@ -46,8 +47,8 @@ export function ProductCard({ product, lang, dict }: Props) {
           <h3 className="text-base font-bold leading-snug text-gray-800 group-hover:text-amber-700">
             {product.name}
           </h3>
-          <span className="mt-0.5 shrink-0 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
-            {product.category}
+          <span className="notranslate mt-0.5 shrink-0 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+            {localizeCategory(product.category, lang)}
           </span>
         </div>
         <p className="mt-1 text-sm text-gray-500">
