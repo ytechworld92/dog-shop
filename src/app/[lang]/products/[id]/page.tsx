@@ -6,6 +6,7 @@ import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
 import { formatPrice } from "@/lib/currency";
 import { localizeCategory } from "@/lib/categories";
 import { ProductActions } from "@/components/ProductActions";
+import { ProductGallery } from "@/components/ProductGallery";
 
 export const dynamic = "force-dynamic";
 
@@ -78,37 +79,11 @@ export default async function ProductDetailPage({
         </Link>
 
         <div className="mt-6 grid gap-8 md:grid-cols-2">
-          <div>
-            <div className="aspect-square rounded-2xl bg-amber-50 flex items-center justify-center overflow-hidden">
-              {product.image_urls?.length > 0 ? (
-                <img
-                  src={product.image_urls[0]}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                />
-              ) : product.image_url ? (
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-8xl">{categoryEmoji[product.category] ?? "👕"}</span>
-              )}
-            </div>
-            {product.image_urls?.length > 1 && (
-              <div className="mt-3 flex gap-2 overflow-x-auto">
-                {product.image_urls.map((url, i) => (
-                  <img
-                    key={i}
-                    src={url}
-                    alt={`${product.name} ${i + 1}`}
-                    className="h-16 w-16 flex-shrink-0 rounded-lg object-cover"
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductGallery
+            images={product.image_urls?.length > 0 ? product.image_urls : product.image_url ? [product.image_url] : []}
+            fallbackEmoji={categoryEmoji[product.category] ?? "👕"}
+            name={product.name}
+          />
 
           <div>
             <span className="notranslate rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
@@ -160,6 +135,7 @@ export default async function ProductDetailPage({
                 image_url: product.image_url,
                 image_urls: product.image_urls,
                 category: product.category,
+                sizes: product.sizes,
               }}
             />
 
