@@ -10,16 +10,19 @@ type Props = {
 export function Header({ lang, dict }: Props) {
   return (
     <header className="sticky top-0 z-50 border-b border-amber-100 bg-white/95 backdrop-blur-sm">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href={`/${lang}`} className="text-xl font-bold text-amber-800">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3">
+        <Link
+          href={`/${lang}`}
+          className="shrink-0 text-lg font-bold text-amber-800 sm:text-xl"
+        >
           🐾 {dict.site.name}
         </Link>
-        <div className="flex items-center gap-6">
-          <ul className="flex items-center gap-6 text-sm font-medium">
+        <div className="flex items-center gap-3 sm:gap-6">
+          <ul className="flex items-center gap-3 text-xs font-medium sm:gap-6 sm:text-sm">
             <li>
               <Link
                 href={`/${lang}/products`}
-                className="text-gray-600 transition-colors hover:text-amber-700"
+                className="whitespace-nowrap text-gray-600 transition-colors hover:text-amber-700"
               >
                 {dict.nav.products}
               </Link>
@@ -27,7 +30,7 @@ export function Header({ lang, dict }: Props) {
             <li>
               <Link
                 href={`/${lang}/contact`}
-                className="text-gray-600 transition-colors hover:text-amber-700"
+                className="whitespace-nowrap text-gray-600 transition-colors hover:text-amber-700"
               >
                 {dict.nav.contact}
               </Link>
