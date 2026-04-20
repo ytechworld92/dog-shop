@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { GoogleTranslate } from "@/components/GoogleTranslate";
 import {
   getDictionary,
   hasLocale,
@@ -27,6 +28,7 @@ export default async function LangLayout({
 
   return (
     <>
+      <GoogleTranslate lang={lang} />
       <Header lang={lang as Locale} dict={dict} />
       {children}
       <Footer lang={lang as Locale} dict={dict} />
