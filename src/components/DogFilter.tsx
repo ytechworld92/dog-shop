@@ -2,8 +2,10 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { categories } from "@/data/dogs";
+import { formatPrice } from "@/lib/currency";
 
 const sizes = ["XS", "S", "M", "L", "XL"];
+const priceOptions = [2000, 3000, 4000, 5000];
 
 type Props = {
   texts: {
@@ -11,9 +13,10 @@ type Props = {
     size: string;
     priceRange: string;
   };
+  lang: string;
 };
 
-export function ProductFilter({ texts }: Props) {
+export function ProductFilter({ texts, lang }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -62,10 +65,11 @@ export function ProductFilter({ texts }: Props) {
         onChange={(e) => updateFilter("maxPrice", e.target.value)}
       >
         <option value="">{texts.priceRange}</option>
-        <option value="2000">~¥2,000</option>
-        <option value="3000">~¥3,000</option>
-        <option value="4000">~¥4,000</option>
-        <option value="5000">~¥5,000</option>
+        {priceOptions.map((price) => (
+          <option key={price} value={price}>
+            ~{formatPrice(price, lang)}
+          </option>
+        ))}
       </select>
     </div>
   );

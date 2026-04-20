@@ -48,6 +48,7 @@ export default async function ProductsPage({
                 size: dict.products.size,
                 priceRange: dict.products.priceRange,
               }}
+              lang={lang}
             />
           </Suspense>
         </div>
