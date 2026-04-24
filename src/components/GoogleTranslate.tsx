@@ -13,8 +13,36 @@ declare global {
   }
 }
 
+function setGoogtransCookie(target: string) {
+  const value = target === "ja" ? "" : `/ja/${target}`;
+  const domain = window.location.hostname;
+  // Set for current host
+  document.cookie = `googtrans=${value};path=/`;
+  // Set for parent domain (e.g., .vercel.app) so subdomains share
+  const parts = domain.split(".");
+  if (parts.length > 1) {
+    const parentDomain = `.${parts.slice(-2).join(".")}`;
+    document.cookie = `googtrans=${value};path=/;domain=${parentDomain}`;
+  }
+}
+
+function getGoogtransCookie(): string {
+  const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : "";
+}
+
 export function GoogleTranslate({ lang }: { lang: string }) {
   useEffect(() => {
+    const desired = lang === "ja" ? "" : `/ja/${lang}`;
+    const current = getGoogtransCookie();
+
+    if (current !== desired) {
+      setGoogtransCookie(lang);
+      // Reload so Google Translate reads the new cookie from the start
+      window.location.reload();
+      return;
+    }
+
     if (document.getElementById("google-translate-script")) return;
 
     window.googleTranslateElementInit = () => {
@@ -34,49 +62,6 @@ export function GoogleTranslate({ lang }: { lang: string }) {
       "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
     script.async = true;
     document.body.appendChild(script);
-  }, []);
-
-  useEffect(() => {
-    const targetLang = lang;
-    let cancelled = false;
-
-    const applyLang = (select: HTMLSelectElement) => {
-      if (select.value === targetLang) return;
-      select.value = targetLang;
-      select.dispatchEvent(new Event("change"));
-    };
-
-    const tryImmediate = () => {
-      const select = document.querySelector(
-        ".goog-te-combo",
-      ) as HTMLSelectElement | null;
-      if (select) {
-        applyLang(select);
-        return true;
-      }
-      return false;
-    };
-
-    if (tryImmediate()) return;
-
-    // Watch for the Google Translate select element to appear
-    const observer = new MutationObserver(() => {
-      if (cancelled) return;
-      const select = document.querySelector(
-        ".goog-te-combo",
-      ) as HTMLSelectElement | null;
-      if (select) {
-        applyLang(select);
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      cancelled = true;
-      observer.disconnect();
-    };
   }, [lang]);
 
   return <div id="google_translate_element" className="hidden" />;
