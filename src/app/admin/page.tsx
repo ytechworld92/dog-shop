@@ -57,6 +57,7 @@ export default function AdminPage() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
 
   const fetchProducts = useCallback(async () => {
     const res = await fetch("/api/admin/products");
@@ -152,28 +153,33 @@ export default function AdminPage() {
     fetchProducts();
   }
 
-  async function moveItem(index: number, direction: "up" | "down") {
-    const targetIndex = direction === "up" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= products.length) return;
+  async function reorder(fromIndex: number, toIndex: number) {
+    if (fromIndex === toIndex) return;
+    if (toIndex < 0 || toIndex >= products.length) return;
 
-    const current = products[index];
-    const neighbor = products[targetIndex];
+    const reordered = [...products];
+    const [moved] = reordered.splice(fromIndex, 1);
+    reordered.splice(toIndex, 0, moved);
 
-    // Swap display_order values
-    await Promise.all([
-      fetch(`/api/admin/products/${current.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ display_order: neighbor.display_order }),
-      }),
-      fetch(`/api/admin/products/${neighbor.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ display_order: current.display_order }),
-      }),
-    ]);
+    setProducts(reordered);
+
+    // Assign unique descending display_order values
+    const total = reordered.length;
+    await Promise.all(
+      reordered.map((p, i) =>
+        fetch(`/api/admin/products/${p.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ display_order: total - i }),
+        }),
+      ),
+    );
 
     fetchProducts();
+  }
+
+  function moveItem(index: number, direction: "up" | "down") {
+    reorder(index, direction === "up" ? index - 1 : index + 1);
   }
 
   if (!authed) {
@@ -210,14 +216,17 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="border-b bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
           <h1 className="text-xl font-bold text-gray-900">🐾 商品管理</h1>
-          <button
-            onClick={startNew}
-            className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
-          >
-            + 新規追加
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <PreviewLinks />
+            <button
+              onClick={startNew}
+              className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
+            >
+              + 新規追加
+            </button>
+          </div>
         </div>
       </header>
 
@@ -241,9 +250,26 @@ export default function AdminPage() {
           {products.map((product, index) => (
             <div
               key={product.id}
-              className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
+              draggable
+              onDragStart={() => setDragIndex(index)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={() => {
+                if (dragIndex !== null) reorder(dragIndex, index);
+                setDragIndex(null);
+              }}
+              onDragEnd={() => setDragIndex(null)}
+              className={`flex items-center justify-between rounded-xl bg-white p-4 shadow-sm transition-opacity ${
+                dragIndex === index ? "opacity-40" : ""
+              }`}
             >
               <div className="flex items-center gap-3">
+                <div
+                  className="cursor-grab text-gray-400 active:cursor-grabbing"
+                  aria-label="ドラッグして並び替え"
+                  title="ドラッグして並び替え"
+                >
+                  ⋮⋮
+                </div>
                 <div className="flex flex-col gap-0.5">
                   <button
                     onClick={() => moveItem(index, "up")}
@@ -299,6 +325,14 @@ export default function AdminPage() {
                 </div>
               </div>
               <div className="flex gap-2">
+                <a
+                  href={`/ja/products/${product.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                >
+                  表示 ↗
+                </a>
                 <button
                   onClick={() => startEdit(product)}
                   className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
@@ -316,6 +350,34 @@ export default function AdminPage() {
           ))}
         </div>
       </main>
+    </div>
+  );
+}
+
+function PreviewLinks() {
+  const pages = [
+    { label: "トップ", path: "/ja" },
+    { label: "商品一覧", path: "/ja/products" },
+    { label: "カート", path: "/ja/cart" },
+    { label: "お問い合わせ", path: "/ja/contact" },
+  ];
+
+  return (
+    <div className="flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 p-1">
+      <span className="px-2 text-xs font-medium text-gray-500">
+        プレビュー:
+      </span>
+      {pages.map((p) => (
+        <a
+          key={p.path}
+          href={p.path}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded px-2 py-1 text-xs text-gray-700 hover:bg-white hover:text-amber-700"
+        >
+          {p.label} ↗
+        </a>
+      ))}
     </div>
   );
 }
