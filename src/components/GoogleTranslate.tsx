@@ -5,20 +5,16 @@ import { useEffect } from "react";
 declare global {
   interface Window {
     googleTranslateElementInit?: () => void;
-    google?: { translate: { TranslateElement: new (config: object, id: string) => void } };
+    google?: {
+      translate: {
+        TranslateElement: new (config: object, id: string) => void;
+      };
+    };
   }
 }
 
-const langMap: Record<string, string> = {
-  ja: "ja",
-  en: "en",
-  ko: "ko",
-  es: "es",
-};
-
 export function GoogleTranslate({ lang }: { lang: string }) {
   useEffect(() => {
-    // Skip if already loaded
     if (document.getElementById("google-translate-script")) return;
 
     window.googleTranslateElementInit = () => {
@@ -40,23 +36,47 @@ export function GoogleTranslate({ lang }: { lang: string }) {
     document.body.appendChild(script);
   }, []);
 
-  // Auto-trigger translation when lang changes
   useEffect(() => {
-    const targetLang = langMap[lang] ?? "ja";
+    const targetLang = lang;
+    let cancelled = false;
 
-    const trySetLang = () => {
+    const applyLang = (select: HTMLSelectElement) => {
+      if (select.value === targetLang) return;
+      select.value = targetLang;
+      select.dispatchEvent(new Event("change"));
+    };
+
+    const tryImmediate = () => {
       const select = document.querySelector(
         ".goog-te-combo",
       ) as HTMLSelectElement | null;
       if (select) {
-        select.value = targetLang;
-        select.dispatchEvent(new Event("change"));
+        applyLang(select);
+        return true;
       }
+      return false;
     };
 
-    // Wait for Google Translate to load
-    const timer = setTimeout(trySetLang, 1500);
-    return () => clearTimeout(timer);
+    if (tryImmediate()) return;
+
+    // Watch for the Google Translate select element to appear
+    const observer = new MutationObserver(() => {
+      if (cancelled) return;
+      const select = document.querySelector(
+        ".goog-te-combo",
+      ) as HTMLSelectElement | null;
+      if (select) {
+        applyLang(select);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
   }, [lang]);
 
   return <div id="google_translate_element" className="hidden" />;
