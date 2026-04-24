@@ -15,6 +15,7 @@ type Product = {
   featured: boolean;
   in_stock: boolean;
   image_urls: string[];
+  display_order: number;
 };
 
 const CATEGORIES = [
@@ -24,6 +25,12 @@ const CATEGORIES = [
   "ワンピース",
   "コスプレ",
   "防寒着",
+  "おでかけグッズ",
+  "アクセサリー",
+  "ベッド・クッション",
+  "おもちゃ",
+  "首輪・リード",
+  "食器・フードボウル",
 ];
 
 const emptyForm = {
@@ -145,6 +152,30 @@ export default function AdminPage() {
     fetchProducts();
   }
 
+  async function moveItem(index: number, direction: "up" | "down") {
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= products.length) return;
+
+    const current = products[index];
+    const neighbor = products[targetIndex];
+
+    // Swap display_order values
+    await Promise.all([
+      fetch(`/api/admin/products/${current.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ display_order: neighbor.display_order }),
+      }),
+      fetch(`/api/admin/products/${neighbor.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ display_order: current.display_order }),
+      }),
+    ]);
+
+    fetchProducts();
+  }
+
   if (!authed) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
@@ -207,12 +238,30 @@ export default function AdminPage() {
         )}
 
         <div className="space-y-3">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div
               key={product.id}
               className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col gap-0.5">
+                  <button
+                    onClick={() => moveItem(index, "up")}
+                    disabled={index === 0}
+                    className="rounded border border-gray-200 px-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30"
+                    aria-label="上へ"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    onClick={() => moveItem(index, "down")}
+                    disabled={index === products.length - 1}
+                    className="rounded border border-gray-200 px-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30"
+                    aria-label="下へ"
+                  >
+                    ▼
+                  </button>
+                </div>
                 {product.image_urls?.length > 0 ? (
                   <img
                     src={product.image_urls[0]}
@@ -363,9 +412,16 @@ function ProductForm({
             inputMode="numeric"
             required
             value={form.priceText}
-            onChange={(e) =>
-              setForm({ ...form, priceText: e.target.value.replace(/[^0-9]/g, "") })
-            }
+            onChange={(e) => {
+              // Convert full-width digits to half-width, then strip non-digits
+              const halfWidth = e.target.value.replace(/[０-９]/g, (c) =>
+                String.fromCharCode(c.charCodeAt(0) - 0xfee0),
+              );
+              setForm({
+                ...form,
+                priceText: halfWidth.replace(/[^0-9]/g, ""),
+              });
+            }}
             placeholder="2480"
             className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"
           />

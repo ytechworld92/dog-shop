@@ -13,6 +13,7 @@ export type Product = {
   in_stock: boolean;
   image_url: string | null;
   image_urls: string[];
+  display_order: number;
 };
 
 export async function getProducts(params?: {
@@ -20,7 +21,7 @@ export async function getProducts(params?: {
   size?: string;
   maxPrice?: number;
 }): Promise<Product[]> {
-  let query = supabase.from("products").select("*").order("created_at", { ascending: false });
+  let query = supabase.from("products").select("*").order("display_order", { ascending: false });
 
   if (params?.category) {
     query = query.eq("category", params.category);
@@ -54,7 +55,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("featured", true)
-    .order("created_at", { ascending: false });
+    .order("display_order", { ascending: false });
 
   return (data ?? []) as Product[];
 }
