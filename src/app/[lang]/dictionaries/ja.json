@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "わん・ダフル",
+    "name": "わん・ダーランド",
     "tagline": "犬服・ドッグウェア通販"
   },
   "nav": {
@@ -21,7 +21,7 @@
     "viewAll": "すべての商品を見る →"
   },
   "whyUs": {
-    "title": "わん・ダフルが選ばれる理由",
+    "title": "わん・ダーランドが選ばれる理由",
     "reason1Title": "犬専用の設計",
     "reason1Desc": "犬の体型に合わせたパターン設計。動きやすさと着せやすさを徹底追求しています。",
     "reason2Title": "安心の素材",
@@ -66,7 +66,7 @@
     "required": "*",
     "otherMethods": "その他のお問い合わせ方法",
     "tel": "電話: 03-1234-5678（10:00〜18:00 / 土日祝休み）",
-    "emailAddress": "メール: info@wanderful-dog.example.com"
+    "emailAddress": "メール: info@wanderland-dog.example.com"
   },
   "footer": {
     "description1": "愛犬をもっとおしゃれに、もっと快適に。",

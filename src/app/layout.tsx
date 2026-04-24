@@ -16,8 +16,8 @@ const zenMaru = Zen_Maru_Gothic({
 
 export const metadata: Metadata = {
   title: {
-    default: "わん・ダフル | 犬服・ドッグウェア通販",
-    template: "%s | わん・ダフル",
+    default: "わん・ダーランド | 犬服・ドッグウェア通販",
+    template: "%s | わん・ダーランド",
   },
   description:
     "愛犬をもっとおしゃれに。Tシャツ、パーカー、レインコート、コスプレなど犬服を豊富に取り揃え。5,000円以上で送料無料。",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    siteName: "わん・ダフル",
+    siteName: "わん・ダーランド",
   },
 };
 

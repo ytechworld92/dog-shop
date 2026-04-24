@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "원더풀",
+    "name": "원더랜드",
     "tagline": "반려견 패션 & 의류"
   },
   "nav": {
@@ -21,7 +21,7 @@
     "viewAll": "모든 상품 보기 →"
   },
   "whyUs": {
-    "title": "원더풀이 선택받는 이유",
+    "title": "원더랜드가 선택받는 이유",
     "reason1Title": "반려견 전용 설계",
     "reason1Desc": "반려견 체형에 맞춘 패턴 설계. 움직이기 쉽고 입히기 쉽게 철저히 추구합니다.",
     "reason2Title": "안심 소재",
@@ -66,7 +66,7 @@
     "required": "*",
     "otherMethods": "다른 문의 방법",
     "tel": "전화: 03-1234-5678 (10:00~18:00 / 주말·공휴일 휴무)",
-    "emailAddress": "이메일: info@wanderful-dog.example.com"
+    "emailAddress": "이메일: info@wanderland-dog.example.com"
   },
   "footer": {
     "description1": "반려견을 더 멋지고 편안하게.",
