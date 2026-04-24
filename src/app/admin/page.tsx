@@ -217,7 +217,15 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-50">
       <header className="border-b bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-bold text-gray-900">🐾 商品管理</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold text-gray-900">🐾 商品管理</h1>
+            <a
+              href="/admin/orders"
+              className="text-[13px] text-gray-600 hover:text-amber-700"
+            >
+              🧾 注文一覧
+            </a>
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <PreviewLinks />
             <button
@@ -258,90 +266,93 @@ export default function AdminPage() {
                 setDragIndex(null);
               }}
               onDragEnd={() => setDragIndex(null)}
-              className={`flex items-center justify-between rounded-xl bg-white p-4 shadow-sm transition-opacity ${
+              className={`grid grid-cols-[auto_auto_auto_1fr_auto] items-center gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2.5 transition-opacity ${
                 dragIndex === index ? "opacity-40" : ""
               }`}
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className="cursor-grab text-gray-400 active:cursor-grabbing"
-                  aria-label="ドラッグして並び替え"
-                  title="ドラッグして並び替え"
-                >
-                  ⋮⋮
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <button
-                    onClick={() => moveItem(index, "up")}
-                    disabled={index === 0}
-                    className="rounded border border-gray-200 px-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30"
-                    aria-label="上へ"
-                  >
-                    ▲
-                  </button>
-                  <button
-                    onClick={() => moveItem(index, "down")}
-                    disabled={index === products.length - 1}
-                    className="rounded border border-gray-200 px-1.5 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30"
-                    aria-label="下へ"
-                  >
-                    ▼
-                  </button>
-                </div>
-                {product.image_urls?.length > 0 ? (
-                  <img
-                    src={product.image_urls[0]}
-                    alt={product.name}
-                    className="h-14 w-14 rounded-lg object-cover"
-                  />
-                ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-amber-50 text-2xl">
-                    👕
-                  </div>
-                )}
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">
-                      {product.name}
-                    </span>
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
-                      {product.category}
-                    </span>
-                    {product.featured && (
-                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800">
-                        おすすめ
-                      </span>
-                    )}
-                    {!product.in_stock && (
-                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-800">
-                        品切れ
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 text-sm text-gray-500">
-                    ¥{product.price.toLocaleString()} / サイズ:{" "}
-                    {product.sizes.join(", ")} / 画像: {product.image_urls?.length ?? 0}枚
-                  </p>
-                </div>
+              <div
+                className="cursor-grab text-gray-300 active:cursor-grabbing"
+                title="ドラッグして並び替え"
+              >
+                ⋮⋮
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-0.5">
+                <button
+                  onClick={() => moveItem(index, "up")}
+                  disabled={index === 0}
+                  className="rounded border border-gray-200 px-1 text-[10px] text-gray-500 hover:bg-gray-50 disabled:opacity-30"
+                  aria-label="上へ"
+                >
+                  ▲
+                </button>
+                <button
+                  onClick={() => moveItem(index, "down")}
+                  disabled={index === products.length - 1}
+                  className="rounded border border-gray-200 px-1 text-[10px] text-gray-500 hover:bg-gray-50 disabled:opacity-30"
+                  aria-label="下へ"
+                >
+                  ▼
+                </button>
+              </div>
+              {product.image_urls?.length > 0 ? (
+                <img
+                  src={product.image_urls[0]}
+                  alt={product.name}
+                  className="h-12 w-12 rounded-md object-cover"
+                />
+              ) : (
+                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-amber-50 text-xl">
+                  👕
+                </div>
+              )}
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="truncate text-[13px] font-medium text-gray-900">
+                    {product.name}
+                  </span>
+                  <span className="shrink-0 whitespace-nowrap rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-700">
+                    {product.category}
+                  </span>
+                  {product.featured && (
+                    <span className="shrink-0 whitespace-nowrap rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800">
+                      人気
+                    </span>
+                  )}
+                  {!product.in_stock && (
+                    <span className="shrink-0 whitespace-nowrap rounded bg-red-100 px-1.5 py-0.5 text-[10px] font-medium text-red-700">
+                      品切れ
+                    </span>
+                  )}
+                </div>
+                <p className="mt-0.5 text-[12px] text-gray-500">
+                  <span className="font-mono">
+                    ¥{product.price.toLocaleString()}
+                  </span>
+                  <span className="mx-1.5 text-gray-300">·</span>
+                  {product.sizes.join("/")}
+                  <span className="mx-1.5 text-gray-300">·</span>
+                  画像 {product.image_urls?.length ?? 0}
+                </p>
+              </div>
+              <div className="flex shrink-0 items-center gap-1">
                 <a
                   href={`/ja/products/${product.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                  className="rounded border border-gray-200 px-2 py-1 text-[12px] text-gray-600 hover:bg-gray-50"
+                  title="表示"
                 >
-                  表示 ↗
+                  ↗
                 </a>
                 <button
                   onClick={() => startEdit(product)}
-                  className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                  className="rounded border border-gray-200 px-2.5 py-1 text-[12px] font-medium text-gray-700 hover:bg-gray-50"
                 >
                   編集
                 </button>
                 <button
                   onClick={() => handleDelete(product.id)}
-                  className="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50"
+                  className="rounded border border-red-200 px-2.5 py-1 text-[12px] font-medium text-red-600 hover:bg-red-50"
                 >
                   削除
                 </button>
