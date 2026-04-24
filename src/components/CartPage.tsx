@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/currency";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
@@ -13,6 +14,28 @@ type Props = {
 export function CartPage({ lang, dict }: Props) {
   const { items, removeFromCart, updateQuantity, cartTotal, clearCart } =
     useCart();
+  const [checkingOut, setCheckingOut] = useState(false);
+
+  async function handleCheckout() {
+    setCheckingOut(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items, lang }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(`決済エラー: ${data.error ?? "unknown"}`);
+        setCheckingOut(false);
+      }
+    } catch (err) {
+      alert("決済処理に失敗しました");
+      setCheckingOut(false);
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -113,15 +136,16 @@ export function CartPage({ lang, dict }: Props) {
             </span>
           </div>
           <div className="mt-6 flex gap-3">
-            <Link
-              href={`/${lang}/contact`}
-              className="flex-1 rounded-lg bg-amber-600 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-amber-700"
+            <button
+              onClick={handleCheckout}
+              disabled={checkingOut}
+              className="flex-1 rounded-full bg-gradient-to-r from-accent to-accent-gold px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50"
             >
-              購入手続きへ
-            </Link>
+              {checkingOut ? "処理中..." : "購入手続きへ"}
+            </button>
             <button
               onClick={clearCart}
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50"
+              className="rounded-full border border-beige px-4 py-3.5 text-sm text-text-muted hover:bg-beige/30"
             >
               カートを空にする
             </button>
