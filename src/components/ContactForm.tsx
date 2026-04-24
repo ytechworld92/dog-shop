@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-type FormState = "idle" | "submitting" | "success";
+type FormState = "idle" | "submitting" | "success" | "error";
 
 type Props = {
   texts: {
@@ -23,11 +23,37 @@ type Props = {
 export function ContactForm({ texts }: Props) {
   const [state, setState] = useState<FormState>("idle");
 
+  const [errorMsg, setErrorMsg] = useState("");
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("submitting");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setState("success");
+    setErrorMsg("");
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setErrorMsg(data.error ?? "送信に失敗しました");
+        setState("error");
+        return;
+      }
+      setState("success");
+    } catch {
+      setErrorMsg("送信に失敗しました");
+      setState("error");
+    }
   }
 
   if (state === "success") {
@@ -101,6 +127,12 @@ export function ContactForm({ texts }: Props) {
           placeholder={texts.placeholder}
         />
       </div>
+
+      {state === "error" && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          {errorMsg}
+        </div>
+      )}
 
       <button
         type="submit"

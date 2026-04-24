@@ -161,19 +161,18 @@ export default function AdminPage() {
     const [moved] = reordered.splice(fromIndex, 1);
     reordered.splice(toIndex, 0, moved);
 
+    // Optimistic UI update
     setProducts(reordered);
 
-    // Assign unique descending display_order values
+    // Sequentially update display_order to avoid race conditions
     const total = reordered.length;
-    await Promise.all(
-      reordered.map((p, i) =>
-        fetch(`/api/admin/products/${p.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ display_order: total - i }),
-        }),
-      ),
-    );
+    for (let i = 0; i < reordered.length; i++) {
+      await fetch(`/api/admin/products/${reordered[i].id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ display_order: total - i }),
+      });
+    }
 
     fetchProducts();
   }
