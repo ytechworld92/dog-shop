@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Product = {
   id: string;
@@ -293,17 +294,20 @@ function ProductForm({
     const newUrls: string[] = [];
 
     for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append("file", file);
+      const ext = file.name.split(".").pop() ?? "jpg";
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const { error } = await supabase.storage
+        .from("product-images")
+        .upload(fileName, file, { contentType: file.type });
 
-      if (res.ok) {
-        const { url } = await res.json();
-        newUrls.push(url);
+      if (!error) {
+        const { data } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(fileName);
+        newUrls.push(data.publicUrl);
+      } else {
+        alert(`アップロード失敗: ${error.message}`);
       }
     }
 
