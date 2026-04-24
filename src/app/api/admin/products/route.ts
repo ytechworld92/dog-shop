@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("products")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("display_order", { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -30,9 +30,18 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
+  // New products appear at the top: assign max(display_order) + 1
+  const { data: maxRow } = await supabase
+    .from("products")
+    .select("display_order")
+    .order("display_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextOrder = (maxRow?.display_order ?? 0) + 1;
+
   const { data, error } = await supabase
     .from("products")
-    .insert(body)
+    .insert({ ...body, display_order: nextOrder })
     .select()
     .maybeSingle();
 
