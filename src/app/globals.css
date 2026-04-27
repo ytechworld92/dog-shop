@@ -1,29 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdf8f3;
-  --foreground: #3d3229;
+  --background: #fefcfa;
+  --foreground: #4a3f36;
   --card: #ffffff;
-  --accent: #c8856c;
-  --accent-light: #f3ddd4;
-  --accent-gold: #b8964e;
-  --pink: #e8b4b8;
-  --pink-light: #fdf0f0;
+  --rose: #e8b4b8;
+  --rose-light: #fdf0f0;
+  --rose-soft: #f5d7d9;
+  --rose-deep: #d99ba0;
   --beige: #f5ede4;
+  --beige-warm: #ede0d0;
+  --gold: #b8964e;
+  --gold-light: #d4b87a;
   --text-muted: #9b8e82;
+  --text-soft: #b5a89c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
-  --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
-  --color-accent-gold: var(--accent-gold);
-  --color-pink: var(--pink);
-  --color-pink-light: var(--pink-light);
+  --color-rose: var(--rose);
+  --color-rose-light: var(--rose-light);
+  --color-rose-soft: var(--rose-soft);
+  --color-rose-deep: var(--rose-deep);
   --color-beige: var(--beige);
+  --color-beige-warm: var(--beige-warm);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
   --color-text-muted: var(--text-muted);
+  --color-text-soft: var(--text-soft);
+  --color-accent: var(--rose);
+  --color-accent-light: var(--rose-light);
+  --color-accent-gold: var(--gold);
+  --color-pink: var(--rose);
+  --color-pink-light: var(--rose-light);
   --font-sans: var(--font-outfit), var(--font-zen-maru), sans-serif;
 }
 

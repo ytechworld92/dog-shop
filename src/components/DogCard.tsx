@@ -29,39 +29,36 @@ export function ProductCard({ product, lang, dict, isNew }: Props) {
 
   return (
     <div className="group relative">
-      {/* Favorite button */}
       <button
         onClick={() => toggleFavorite(product.id)}
-        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-sm backdrop-blur-sm transition-all hover:scale-110"
+        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm shadow-sm backdrop-blur-sm transition-all hover:scale-110"
         aria-label="Favorite"
       >
         {fav ? (
-          <span className="text-pink">♥</span>
+          <span className="text-rose-deep">♥</span>
         ) : (
-          <span className="text-text-muted">♡</span>
+          <span className="text-text-soft">♡</span>
         )}
       </button>
 
-      {/* Badges */}
       <div className="absolute left-3 top-3 z-10 flex flex-col gap-1">
         {isNew && (
-          <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm">
+          <span className="rounded-full bg-gradient-to-r from-rose to-rose-deep px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm">
             New
           </span>
         )}
         {product.featured && !isNew && (
-          <span className="rounded-full bg-accent-gold px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
-            人気
+          <span className="rounded-full bg-gold-light px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-white shadow-sm">
+            BEST
           </span>
         )}
       </div>
 
       <Link
         href={`/${lang}/products/${product.id}`}
-        className="block overflow-hidden rounded-3xl bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+        className="block overflow-hidden rounded-3xl border border-rose-soft/40 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
       >
-        {/* Image */}
-        <div className="aspect-[4/5] overflow-hidden bg-beige">
+        <div className="aspect-[4/5] overflow-hidden bg-rose-light/50">
           {product.image_urls?.length > 0 ? (
             <img
               src={product.image_urls[0]}
@@ -83,21 +80,20 @@ export function ProductCard({ product, lang, dict, isNew }: Props) {
           )}
         </div>
 
-        {/* Info */}
         <div className="p-5">
-          <span className="notranslate text-[11px] font-medium uppercase tracking-widest text-text-muted">
+          <span className="notranslate text-[10px] font-medium uppercase tracking-[0.2em] text-rose-deep">
             {localizeCategory(product.category, lang)}
           </span>
-          <h3 className="mt-1.5 text-sm font-medium leading-snug text-foreground line-clamp-2">
+          <h3 className="mt-2 text-sm font-medium leading-snug text-foreground line-clamp-2">
             {product.name}
           </h3>
-          <p className="mt-3 text-lg font-bold tracking-tight text-accent notranslate">
+          <p className="mt-3 text-lg font-semibold tracking-tight text-rose-deep notranslate">
             {formatPrice(product.price, lang)}
-            <span className="ml-1 text-xs font-normal text-text-muted">
+            <span className="ml-1 text-[10px] font-normal text-text-soft">
               {dict.products.taxIncluded}
             </span>
           </p>
-          <p className="mt-1.5 text-[11px] text-text-muted">
+          <p className="mt-1.5 text-[11px] text-text-soft">
             {product.sizes.join(" / ")}
           </p>
         </div>
